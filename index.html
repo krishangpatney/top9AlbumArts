@@ -17,25 +17,34 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </head>
-    <center><body style = "width: 900px;">
+    ><body style = "width: 900px;">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <center
         <br>
-        This application uses the album-art plugin.
+        This application uses the album-art plugin. 
+        <br>
+        Works best on a computer
+        <!-- Add a button to shuffle across a computer or phone screen -->
+        
+        <br>
+        Take a screenshot once you reach 9 albums :).
+        <br>
         Album Name : <input type="text" id="albumName" >
         Album Artist : <input type="text" id="albumArtist" >
         <button onclick="myFunction()">Add Album</button>
         <!-- Add a searchbar for names which then calls the functions I guess -->
         <br>
-
-        
+  
         <script>
+
         function myFunction() {
             var myVal;
             var x = document.createElement("IMG");
             var albumName = document.getElementById("albumName").value;
             var albumArtist = document.getElementById("albumArtist").value;
+            var phone;
 
             const myAsyncFunc = (result) => { 
             x.setAttribute("src", String(result));
@@ -50,5 +59,5 @@
         }
         </script>
     </body>
-    </center>
+
 </html>

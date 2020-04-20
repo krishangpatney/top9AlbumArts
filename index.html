@@ -31,17 +31,24 @@
         <br>
         Take a screenshot once you reach 9 albums :).
         <br>
-        Album Name : <input type="text" id="albumName" >
+        Album Name : <input type="text" id="albumName" required>
         Album Artist : <input type="text" id="albumArtist" >
-        <button onclick="myFunction()">Add Album</button>
+        <button id = "myBtn" onclick="myFunction()">Add Album</button>
         <span class="error"><p id="albumError"></p></span>
+        <span class="error"><p id="notFound"></p></span>
         <!-- Add a searchbar for names which then calls the functions I guess -->
         <br>
         
         <script>
+        var input = document.getElementById("albumName");
+        input.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("myBtn").click();
+            }
+        });
 
         function myFunction() {
-            var myVal;
             var x = document.createElement("IMG");
             var albumName = document.getElementById("albumName").value;
             var albumArtist = document.getElementById("albumArtist").value;
@@ -51,16 +58,22 @@
                 document.getElementById("albumError").innerHTML = nameError; 
             } else if (albumName != null || albumName != "") {
             const myAsyncFunc = (result) => { 
-            x.setAttribute("src", String(result));
-            x.setAttribute
-            // console.log(result);
-            myVal = result;
-            // ...
-                };
+                console.log(result)
+                if (result == "Error: No results found"){
+                    console.log(result);
+                    notFoundError = "Album not found, please search again";
+                    document.getElementById("notFound").innerHTML = notFoundError;
+                } else if (result != "Error: No results found") {
+                    x.setAttribute("src", String(result));
+                    console.log(result);
+                }
+                
+            };
             albumArt( String(albumArtist), {album: String(albumName), size: 'medium'} )
             .then(myAsyncFunc);
-            };
             document.body.appendChild(x);
+            albumName.reset();
+            };
         }
         </script>
     </body>

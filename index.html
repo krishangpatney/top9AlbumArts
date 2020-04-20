@@ -17,7 +17,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </head>
-    ><body style = "width: 900px;">
+    <body style = "width: 900px;">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -34,9 +34,10 @@
         Album Name : <input type="text" id="albumName" >
         Album Artist : <input type="text" id="albumArtist" >
         <button onclick="myFunction()">Add Album</button>
+        <span class="error"><p id="albumError"></p></span>
         <!-- Add a searchbar for names which then calls the functions I guess -->
         <br>
-  
+        
         <script>
 
         function myFunction() {
@@ -45,7 +46,10 @@
             var albumName = document.getElementById("albumName").value;
             var albumArtist = document.getElementById("albumArtist").value;
             var phone;
-
+            if (albumName == null || albumName == ''){
+                nameError = "Please enter album name";
+                document.getElementById("albumError").innerHTML = nameError; 
+            } else if (albumName != null || albumName != "") {
             const myAsyncFunc = (result) => { 
             x.setAttribute("src", String(result));
             x.setAttribute
@@ -55,6 +59,7 @@
                 };
             albumArt( String(albumArtist), {album: String(albumName), size: 'medium'} )
             .then(myAsyncFunc);
+            };
             document.body.appendChild(x);
         }
         </script>

@@ -18,6 +18,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
         <!-- Tracking analytics -->
+
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164122235-1"></script>
         <script>
@@ -27,32 +28,53 @@
 
         gtag('config', 'UA-164122235-1');
         </script>
+        <!-- End tracking -->
     </head>
-    <body style = "width: 900px;">
+    <body style = "max-width: 900px;">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <center>
-        <br>
-        This application uses the album-art plugin. 
-        <br>
-        Works best on a computer
-        <!-- Add a button to shuffle across a computer or phone screen -->
-        
-        <br>
-        Take a screenshot once you reach 9 albums :).
-        Click an album to delete it
-        <br>
-        Album Name : <input type="text" id="albumName" required> *
-        Album Artist : <input type="text" id="albumArtist" >
-        <button id = "myBtn" onclick="myFunction()" >Add Album</button>
-        <span class="error"><p id="albumError"></p></span>
-        <span class="error"><p id="notFound"></p></span>
-        <!-- Add a searchbar for names which then calls the functions I guess -->
-        <br>
-        
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Album Creator</h5>
+                <p class="card-text">
+                    This application uses the album-art plugin.
+                    <br>
+                    Works best on a computer        
+                    <br>
+                    Take a screenshot once you reach 9 albums :).
+                    Click an album to delete it
+                    <form>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="albumName" aria-describedby="emailHelp" placeholder="Album Name - required" required>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="albumArtist" placeholder="Album Artist">
+                        </div>
+                    </form>
+                    <span class="error"><p id="albumError"></p></span>
+                    <span class="error"><p id="notFound"></p></span>
+
+                </p>
+
+                <a id = "myBtn" onclick="myFunction()" class="btn btn-primary">Add Album</a>
+            </div>
+        </div>
+        <!-- Adds album covers here -->
     </body>
     <script>
+        // Tried making it work for phones but have left it for now.
+        var size;
+        var imageWidth = 300;
+        var screenWidth = screen.width;
+        if (screen.width < 900) {
+            size = 'medium';
+            imageWidth = screenWidth / 3;
+        }else{
+            size = 'medium';
+        }
+        // Lets you use the enter for better funtionality
         var input = document.getElementById("albumName");
         input.addEventListener("keyup", function(event) {
             if (event.keyCode === 13) {
@@ -60,19 +82,25 @@
                 document.getElementById("myBtn").click();
             }
         });
-
+        // Clicking a image lets you delete it.
         function remove(el) {
             var element = el;
             element.remove();
         }
+        // Using the album-art API which dumbs down the spotify api to recive the album art
+        // I use them to call the function upon a button click and add the images into the html above.
 
         function myFunction() {
+            var division = document.getElementById("containsImages");
             var x = document.createElement("img");
+            // Get the values
             var albumName = document.getElementById("albumName").value;
             var albumArtist = document.getElementById("albumArtist").value;
+            // Clear the input forms
             document.getElementById('albumName').value = '';
             document.getElementById('albumArtist').value = '';
             var phone;
+
             if (albumName == null || albumName == ''){
                 nameError = "Please enter album name";
                 document.getElementById("albumError").innerHTML = nameError; 
@@ -89,17 +117,14 @@
                 }
                 
             };
-            albumArt( String(albumArtist), {album: String(albumName), size: 'medium'} )
+            albumArt( String(albumArtist), {album: String(albumName), size: size} )
             .then(myAsyncFunc);
             x.setAttribute('onclick',"remove(this)");
             x.setAttribute('id', String(albumName));
+            x.setAttribute('width', imageWidth+"px");
             document.body.appendChild(x);
             };
         }
-
-        // document.getElementById("header").onclick = function() {
-        //     window.location = "http://my.example.com";
-        // }
     </script>
 
 </html>

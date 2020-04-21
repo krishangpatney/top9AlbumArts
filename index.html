@@ -32,7 +32,7 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <center
+        <center>
         <br>
         This application uses the album-art plugin. 
         <br>
@@ -41,16 +41,18 @@
         
         <br>
         Take a screenshot once you reach 9 albums :).
+        Click an album to delete it
         <br>
-        Album Name : <input type="text" id="albumName" required>
+        Album Name : <input type="text" id="albumName" required> *
         Album Artist : <input type="text" id="albumArtist" >
-        <button id = "myBtn" onclick="myFunction()">Add Album</button>
+        <button id = "myBtn" onclick="myFunction()" >Add Album</button>
         <span class="error"><p id="albumError"></p></span>
         <span class="error"><p id="notFound"></p></span>
         <!-- Add a searchbar for names which then calls the functions I guess -->
         <br>
         
-        <script>
+    </body>
+    <script>
         var input = document.getElementById("albumName");
         input.addEventListener("keyup", function(event) {
             if (event.keyCode === 13) {
@@ -59,10 +61,17 @@
             }
         });
 
+        function remove(el) {
+            var element = el;
+            element.remove();
+        }
+
         function myFunction() {
-            var x = document.createElement("IMG");
+            var x = document.createElement("img");
             var albumName = document.getElementById("albumName").value;
             var albumArtist = document.getElementById("albumArtist").value;
+            document.getElementById('albumName').value = '';
+            document.getElementById('albumArtist').value = '';
             var phone;
             if (albumName == null || albumName == ''){
                 nameError = "Please enter album name";
@@ -82,11 +91,15 @@
             };
             albumArt( String(albumArtist), {album: String(albumName), size: 'medium'} )
             .then(myAsyncFunc);
+            x.setAttribute('onclick',"remove(this)");
+            x.setAttribute('id', String(albumName));
             document.body.appendChild(x);
-            albumName.reset();
             };
         }
-        </script>
-    </body>
+
+        // document.getElementById("header").onclick = function() {
+        //     window.location = "http://my.example.com";
+        // }
+    </script>
 
 </html>

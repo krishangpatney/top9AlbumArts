@@ -112,15 +112,16 @@
                 } else if (result != "Error: No results found") {
                     x.setAttribute("src", String(result));
                     console.log(result);
+                    x.setAttribute('onclick',"remove(this)");
+                    x.setAttribute('id', String(albumName));
+                    x.setAttribute('width', imageWidth+"px");
+                    document.body.appendChild(x);
                 }
                 
             };
             albumArt( String(albumArtist), {album: String(albumName), size: size} )
             .then(myAsyncFunc);
-            x.setAttribute('onclick',"remove(this)");
-            x.setAttribute('id', String(albumName));
-            x.setAttribute('width', imageWidth+"px");
-            document.body.appendChild(x);
+
             };
         }
     </script>

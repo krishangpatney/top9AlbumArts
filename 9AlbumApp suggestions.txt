@@ -1,0 +1,4 @@
+App suggestions : Save an image to clipboard upon clicking it
+		  Drag and drop for albums (might be hard)
+		  Saves the images with a button
+		  Center it on desktop 

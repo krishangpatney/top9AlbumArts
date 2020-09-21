@@ -16,7 +16,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+        <script src="html2canvas.js"></script>
         <!-- Tracking analytics -->
 
         <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -30,38 +30,42 @@
         </script>
         <!-- End tracking -->
     </head>
-    <body style = "max-width: 900px;">
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <center>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Album Creator</h5>
-                <p class="card-text">
-                    This application uses the album-art plugin.
-                    <br>
-                    Take a screenshot once you reach 9 albums :).
-                    Click an album to delete it
-                    <form>
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="albumName" aria-describedby="emailHelp" placeholder="Album Name - required" required>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="albumArtist" placeholder="Album Artist">
-                        </div>
-                    </form>
-                    <span class="error"><p id="albumError"></p></span>
-                    <span class="error"><p id="notFound"></p></span>
+    <body >
+        <div class = "container">
+           
+                <div class="card border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Album Art Creator</h5>
+                        <p class="card-text">
+                            This application uses the album-art plugin.
+                            <br>
+                            Take a screenshot once you reach 9 albums.
+                            Click an album to delete it
+                            <form>
+                                <div class="form-group">
+                                <input type="text" class="form-control" id="albumName" aria-describedby="emailHelp" placeholder="Album Name - required" required>
+                                </div>
+                                <div class="form-group">
+                                <input type="text" class="form-control" id="albumArtist" placeholder="Album Artist">
+                                </div>
+                            </form>
+                            <span class="error"><p id="albumError"></p></span>
+                            <span class="error"><p id="notFound"></p></span>
 
-                </p>
+                        </p>
 
-                <a id = "myBtn" onclick="myFunction()" class="btn btn-primary">Add Album</a>
+                        <a id = "myBtn" onclick="myFunction()" class="btn btn-primary">Add Album</a>
+
+                    </div>
+                </div>
+            <hr>
+            <!-- Adds album covers here -->
+            <div id="imageSection" class = "row justify-content-center">
             </div>
         </div>
-        <!-- Adds album covers here -->
     </body>
     <script>
+
         // Tried making it work for phones but have left it for now.
         var size;
         var imageWidth = 300;
@@ -85,6 +89,7 @@
             var element = el;
             element.remove();
         }
+
         // Using the album-art API which dumbs down the spotify api to recive the album art
         // I use them to call the function upon a button click and add the images into the html above.
 
@@ -104,26 +109,28 @@
                 document.getElementById("albumError").innerHTML = nameError; 
             } else if (albumName != null || albumName != "") {
             const myAsyncFunc = (result) => { 
-                console.log(result)
+
                 if (result == "Error: No results found"){
-                    console.log(result);
+
                     notFoundError = "Album not found, please search again";
                     document.getElementById("notFound").innerHTML = notFoundError;
                 } else if (result != "Error: No results found") {
                     x.setAttribute("src", String(result));
-                    console.log(result);
+
                     x.setAttribute('onclick',"remove(this)");
                     x.setAttribute('id', String(albumName));
                     x.setAttribute('width', imageWidth+"px");
-                    document.body.appendChild(x);
+                    document.getElementById("imageSection").appendChild(x);
                 }
-                
+               
             };
-            albumArt( String(albumArtist), {album: String(albumName), size: size} )
-            .then(myAsyncFunc);
-
+            
+            albumArt( String(albumArtist), {album: String(albumName), size: size} ).then(myAsyncFunc);
             };
         }
+        
+        // Create a canvas Merged image<br/><canvas id="myCanvas" width="900" height="900" style="border:1px solid #d3d3d3;">
+        // hide all the images and then display the canvas so it can be saved
     </script>
 
 </html>
